@@ -1,18 +1,18 @@
-const fs = require("fs");
-const path = require("path");
-
+const fs = require("fs").promises;
+// importing the fs with asynchronous functionality
 const directoryPath = "./02_01_2024/entry";
 
-// Read all files in the directory
-fs.readdir(directoryPath, (err, files) => {
-  if (err) {
-    console.error("Error reading directory:", err);
-    return;
-  }
+async function main(path) {
+  const data = await readFileNames(path);
+  console.log(data);
+  //   getting the names of files and storing it in an array
+}
 
-  console.log(files);
-  // Log the names of all files in the directory
-  //   files.forEach((file) => {
-  //     console.log(file);
-  //   });
-});
+async function readFileNames(path) {
+  const fileNames = await fs.readdir(path);
+  return fileNames;
+
+  //   using the readdir function from fs to read the names of files and return the data to the  ain function
+}
+
+main(directoryPath);

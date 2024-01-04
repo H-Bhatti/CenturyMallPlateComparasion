@@ -7,6 +7,7 @@ const Datastore = require("nedb");
 // adding database
 
 const csv = require("csv-parser");
+const { resolve } = require("path");
 
 const database = new Datastore("database1.db");
 database.loadDatabase();
@@ -39,11 +40,16 @@ async function readFileNames(path) {
 }
 
 // main(directoryPath);
-const collectedData = [];
+
+const results = [];
 fss
   .createReadStream("./data.csv")
   .pipe(csv({}))
-  .on("data", (data) => collectedData.push(data))
-  .on("end", () => console.log(collectedData));
-
-// console.log(collectedData);
+  .on("data", (data) => results.push(data))
+  .on("end", () => {
+    console.log(results.length);
+    // console.log(results)
+    for (let i = 0; i < results.length; i++) {
+      console.log(results[i]);
+    }
+  });

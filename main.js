@@ -53,16 +53,16 @@ function comparasion() {
   }
 }
 
-// try method with readfilesync, this is a synchronows function which reads the file and processes it and makes it into an array
+// try method with readfilesync, this is a synchronows function which reads the file and processes it and makes it into an array, worst approach
 
-try {
-  // Synchronously read the contents of a file
-  const data = fss.readFileSync("./data.csv", "utf8");
-  collectedData = data.trim("\r\n").split("\r\n");
-} catch (error) {
-  console.error("Error reading file:", error.message);
-}
-console.log(collectedData);
+// try {
+//   // Synchronously read the contents of a file
+//   const data = fss.readFileSync("./data.csv", "utf8");
+//   collectedData = data.trim("\r\n").split("\r\n");
+// } catch (error) {
+//   console.error("Error reading file:", error.message);
+// }
+// console.log(collectedData);
 
 // file path for collected data csv
 
@@ -77,3 +77,14 @@ console.log(collectedData);
 //     console.log("collectedData");
 //     comparasion();
 //   });
+
+// reading with readstream beter aproach
+const readStream = fss.createReadStream(collectedDataPath);
+
+readStream.on("data", (chuck) => {
+  let chunkString = chuck.toString();
+  collectedData = chunkString.trim("\r\n").split("\r\n");
+
+  console.log(chunkString);
+  console.log(collectedData);
+});
